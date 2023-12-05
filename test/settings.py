@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'overview'
 ]
 
@@ -54,6 +55,20 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'test.urls'
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
+
+    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    
+    'DEFAULT_PAGINATION_CLASS': 'overview.pagination.PageNumberSizePagination',
+    'PAGE_SIZE': 5
+}
 
 TEMPLATES = [
     {

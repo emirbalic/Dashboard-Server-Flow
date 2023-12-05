@@ -6,6 +6,8 @@ from rest_framework import viewsets
 from overview.models import Customer, Order, Category, Product, Supplier
 from overview.serializers import CategorySerializer, CustomerSerializer, OrderSerializer, ProductSerializer, SupplierSerializer
 
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 class OverviewViewSet(APIView):
     
@@ -17,8 +19,13 @@ class OverviewViewSet(APIView):
     
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
+    search_fields = ['shipped_name', 'customer__last_name'] # '^' means to search only from start
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter )
+    filterset_fields = ['shipped_country', 'shipped_city']#
+    queryset = Order.objects.all().order_by('id') #.order_by('id') - to suppress the warning
     serializer_class = OrderSerializer
+
+
     # http_method_names = ['get', 'post', 'patch','delete']
     # return Response(queryset)
 
