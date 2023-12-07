@@ -83,3 +83,14 @@ class ProductSerializer(serializers.ModelSerializer):
         return super(ProductSerializer, self).to_representation(instance)
     
     
+# add when adding filtering to backend
+
+class CountryFilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['shipped_country']
+        
+class CityFilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['shipped_city']
