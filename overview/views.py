@@ -21,15 +21,27 @@ class OverviewViewSet(APIView):
     
 
 class OrderViewSet(viewsets.ModelViewSet):
+    
     search_fields = ['product__product_name' , 'customer__country'] # '^' means to search only from start 
     filter_backends = (DjangoFilterBackend, filters.SearchFilter )
     filterset_fields = ['shipped_country', 'shipped_city']#
-    queryset = Order.objects.all().order_by('id') #.order_by('id') - to suppress the warning
+    # queryset = Order.objects.all().order_by('id') #.order_by('id') - to suppress the warning
+    # queryset = Order.objects.all().order_by('-order_date') #.order_by('id') - to suppress the warning
     serializer_class = OrderSerializer
 
     # pagination_class = PageNumberSizePagination
     # http_method_names = ['get', 'post', 'patch','delete']
     # return Response(queryset)
+    
+    def get_queryset(self):
+        # print('in view set +++++++++++++++++++++++')
+        # print(self.request.GET.get('order_by'))
+        if (self.request.GET.get('order_by')) == 'order_date':
+            print('by order date +++++++++++++++++++++++')
+            return Order.objects.all().order_by('-order_date')
+        else:
+            print('by id +++++++++++++++++++++++')
+            return Order.objects.all().order_by('id')
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
