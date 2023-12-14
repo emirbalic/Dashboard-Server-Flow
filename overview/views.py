@@ -37,10 +37,10 @@ class OrderViewSet(viewsets.ModelViewSet):
         # print('in view set +++++++++++++++++++++++')
         # print(self.request.GET.get('order_by'))
         if (self.request.GET.get('order_by')) == 'order_date':
-            print('by order date +++++++++++++++++++++++')
+            # print('by order date +++++++++++++++++++++++')
             return Order.objects.all().order_by('-order_date')
         else:
-            print('by id +++++++++++++++++++++++')
+            # print('by id +++++++++++++++++++++++')
             return Order.objects.all().order_by('id')
 
 class CategoryViewSet(viewsets.ModelViewSet):
