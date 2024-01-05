@@ -20,13 +20,13 @@ from django.conf import settings
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
-#32.29 == https://www.youtube.com/watch?v=xjMP0hspNLE
-# in case I need a username from token in frontend
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        token['username'] = user.username
-        return token
+# #32.29 == https://www.youtube.com/watch?v=xjMP0hspNLE
+# # in case I need a username from token in frontend
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super().get_token(user)
+#         token['username'] = user.username
+#         return token
     
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -49,6 +49,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['is_admin'] = self.user.is_staff
         data['is_active'] = self.user.is_active
         data['requires_reset'] = self.user.required_password_change
+        data['username'] = self.user.username
+        data['id'] = self.user.id
         # print('data here :::::  ------ >', data)
         return data
 

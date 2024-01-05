@@ -45,11 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
+    'rest_framework',
     'overview',
     'axes',
     'users',
     # add this in  rotating tokens lesson
-     'rest_framework_simplejwt.token_blacklist',
+    #  'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -102,11 +103,12 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.user'
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    # 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),# change to days=7 after lesson refresh
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7), # CHECK REFRESH SHIT!!!!!
 
     # add in refresh tokens
-    'ROTATE_REFRESH_TOKENS': True,
+    'ROTATE_REFRESH_TOKENS': True, # comment after leson
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': True,
     'SIGNING_KEY': SECRET_KEY,

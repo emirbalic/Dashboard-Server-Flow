@@ -16,23 +16,25 @@ from users.serializers import UserSerializer
 logger = logging.getLogger(__name__)
 
 
+
+        
+ # add all of it in admin section
 class UsersView(ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
     queryset = User.objects.all()
     paginator = None
 
-class OwnUserView(APIView):
+
+
+class UpdateUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, format=None):
-        serializer = UserSerializer(request.user)
-        # print('OwnUserView is ===================> ', request)
-        return Response(serializer.data)
 
     def put(self, request):
         data = request.data
-        print('OwnUserView is ===================> ', request.data)
+        if self.checkif_request_field_valid(request, "username"):
+            request.user.username = data["username"]
         if self.checkif_request_field_valid(request, "first_name"):
             request.user.first_name = data["first_name"]
         if self.checkif_request_field_valid(request, "last_name"):
@@ -40,6 +42,7 @@ class OwnUserView(APIView):
         if self.checkif_request_field_valid(request, "email"):
             request.user.email = data["email"]
         request.user.save()
+       
         return Response({}, status=200)
 
     def checkif_request_field_valid(self, request, field_name):
@@ -79,6 +82,8 @@ class DeleteUserView(APIView):
 
 class ResetUserPasswordView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
+    # print('mamaaaa im here')
 
     def post(self, request, format=None):
         try:
