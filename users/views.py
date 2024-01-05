@@ -144,6 +144,15 @@ class UpdateUserActivityView(APIView):
         user.save()
         return Response({"Activity updated"}, status=200)
 
+class Deactivate(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, format=None):
+       
+        request.user.is_active = False
+        request.user.save()
+        return Response({"User deactivated"}, status=200)
+
 
 class ResetLoginAttemptsView(APIView):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]

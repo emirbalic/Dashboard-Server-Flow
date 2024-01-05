@@ -6,7 +6,8 @@ from rest_framework_simplejwt.views import (
 from .custom_jwt_claims import CustomTokenObtainPairView
 
 from users.views import UsersView, NewUserView, DeleteUserView, ResetUserPasswordView, UpdateUserActivityView, \
-    AdminResetUserPasswordView, ResetLoginAttemptsView, UpdateUserView
+    AdminResetUserPasswordView, ResetLoginAttemptsView, UpdateUserView, Deactivate
+
 # , OwnUserView
 # , UserMeView
 # , #UserView
@@ -37,6 +38,9 @@ urlpatterns = [
          ResetLoginAttemptsView.as_view(), name='admin_reset_login_attempts'),
     path('users/update-activity',
          UpdateUserActivityView.as_view(), name='update_activity'),
+
+    path('users/deactivate',
+         Deactivate.as_view(), name='deactivate'),
     # only this two at the begining of the chapter, the rest for the admin
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
